@@ -1,3 +1,4 @@
+from player import Player
 from room import Room
 
 # Declare all the rooms
@@ -38,14 +39,49 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Neal", room["outside"])
 
+play = True
+direction = None
 # Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+while play == True:
+    #
+    # * Prints the current room name
+    print(player)
+    # * Prints the current description (the textwrap module might be useful here).
+    print(player.current_room.description)
+    # * Waits for user input and decides what to do.
+    while direction not in ['q', 'n', 's', 'e', 'w']:
+        direction = input("Please choose a direction (enter 'q' to quit):")
+    
+
+    in_place = player.current_room.name
+#    print(in_place)
+    #
+    # If the user enters "q", quit the game.
+    if direction == 'q':
+        play = False
+        print("Terminating game session")
+        break
+    #
+    # If the user enters a cardinal direction, attempt to move to the room there.
+    # Print an error message if the movement isn't allowed.
+    elif direction == 'n':
+        if player.current_room.n_to != None:
+            player.current_room = player.current_room.n_to
+    elif direction == 's':
+        if player.current_room.s_to != None:
+            player.current_room = player.current_room.s_to
+    elif direction == 'e':
+        if player.current_room.e_to != None:
+            player.current_room = player.current_room.e_to
+    elif direction == 'w':
+        if player.current_room.w_to != None:
+            player.current_room = player.current_room.w_to
+
+    if player.current_room.name == in_place:
+        print("That is not a valid movement at this time.")
+    
+    print()
+
+    direction = None
