@@ -2,10 +2,16 @@
 # currently.
 
 class Player:
-    def __init__(self, name, current_room):
+    def __init__(self, name, current_room, inventory=[]):
         self.name = name
         self.current_room = current_room
+        self.inventory = inventory
 
     def __repr__(self):
         return f"Your location is {self.current_room.name}."
 
+    def pickup_item(self, item):
+        self.inventory.append(item)
+    
+    def drop_item(self, item):
+        self.inventory.remove(item)
